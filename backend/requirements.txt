@@ -1,0 +1,30 @@
+pymupdf
+openai
+python-dotenv
+
+# fastapi
+fastapi
+uvicorn
+python-multipart
+
+# career - bot
+langchain
+langchain-community
+langchain-openai
+chromadb
+pypdf
+pandas
+tqdm
+python-dotenv
+openai
+
+# database & auth
+motor
+pymongo
+passlib[bcrypt]
+python-jose[cryptography]
+bcrypt
+authlib
+email-validator
+httpx
+pinecone

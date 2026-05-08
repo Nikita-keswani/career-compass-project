@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Career Navigator Dashboard — Chat with AI assistants, analyse resumes, and explore career paths." />
+  <title>Career Navigator — Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- Marked.js for Markdown rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+<div class="dashboard">
+
+  <!-- ─── Sidebar ──────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="brand">
+      <h2>🧭 Career Navigator</h2>
+      <span>AI Guidance Platform</span>
+    </div>
+
+    <!-- Main navigation -->
+    <ul class="sidebar-nav">
+      <li>
+        <a href="#" data-panel="panel-career" class="active">
+          <span class="nav-icon">💼</span> Career Assistant
+        </a>
+      </li>
+      <li>
+        <a href="#" data-panel="panel-skit">
+          <span class="nav-icon">🎓</span> SKIT Assistant
+        </a>
+      </li>
+      <li>
+        <a href="#" data-panel="panel-resume">
+          <span class="nav-icon">📄</span> Resume Analyser
+        </a>
+      </li>
+    </ul>
+
+    <!-- Thread lists — shown contextually -->
+    <div id="career-threads-section" class="threads-section">
+      <div class="threads-header">
+        <span>💼 Conversations</span>
+        <button id="career-new-thread" class="btn-new-thread" title="New Thread">＋</button>
+      </div>
+      <ul id="career-thread-list" class="thread-list"></ul>
+    </div>
+
+    <div id="skit-threads-section" class="threads-section hidden">
+      <div class="threads-header">
+        <span>🎓 Conversations</span>
+        <button id="skit-new-thread" class="btn-new-thread" title="New Thread">＋</button>
+      </div>
+      <ul id="skit-thread-list" class="thread-list"></ul>
+    </div>
+  </aside>
+
+  <!-- ─── Header ───────────────────────────────────────── -->
+  <header class="top-header">
+    <span id="page-title" class="page-title">Career Assistant</span>
+    <div class="user-badge">
+      <div id="user-avatar" class="avatar">U</div>
+      <span id="user-name">User</span>
+      <button id="btn-logout" class="btn-logout">Logout</button>
+    </div>
+  </header>
+
+  <!-- ─── Main Content ─────────────────────────────────── -->
+  <main class="main-content">
+
+    <!-- ── Career Assistant Panel ──────────────────────── -->
+    <section id="panel-career" class="panel active">
+      <div class="chat-container">
+        <div id="career-messages" class="chat-messages">
+          <div id="career-empty" class="empty-chat">
+            <div class="empty-icon">💼</div>
+            <h3>Career Assistant</h3>
+            <p>Ask me about career roadmaps, job opportunities, skills, and more!</p>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <div class="chat-input-wrapper">
+            <textarea id="career-input" rows="1" placeholder="Ask anything about your career…"></textarea>
+            <button id="career-send" class="btn-send" title="Send">▶</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SKIT Assistant Panel ────────────────────────── -->
+    <section id="panel-skit" class="panel">
+      <div class="chat-container">
+        <div id="skit-messages" class="chat-messages">
+          <div id="skit-empty" class="empty-chat">
+            <div class="empty-icon">🎓</div>
+            <h3>SKIT Assistant</h3>
+            <p>I can answer questions about SKIT academics, campus life, and placements.</p>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <div class="chat-input-wrapper">
+            <textarea id="skit-input" rows="1" placeholder="Ask anything about SKIT…"></textarea>
+            <button id="skit-send" class="btn-send" title="Send">▶</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── Resume Analyser Panel ───────────────────────── -->
+    <section id="panel-resume" class="panel">
+      <div class="resume-panel">
+        <h2>📄 Resume Analyser</h2>
+
+        <div class="upload-card">
+          <form id="resume-form" class="upload-form">
+            <!-- File Drop Zone -->
+            <div class="file-drop-zone" id="drop-zone">
+              <div class="drop-icon">📤</div>
+              <p>Drag &amp; drop your resume PDF here, or click to browse</p>
+              <div id="file-name" class="file-name"></div>
+              <input type="file" id="resume-file" accept=".pdf" />
+            </div>
+
+            <!-- Fields -->
+            <div class="form-fields-row">
+              <div class="form-group">
+                <label for="job-role">Job Role</label>
+                <input type="text" id="job-role" placeholder="e.g. Data Scientist" required />
+              </div>
+              <div class="form-group">
+                <label for="experience-level">Experience Level</label>
+                <select id="experience-level" class="form-select">
+                  <option value="fresher">Fresher</option>
+                  <option value="junior">Junior (1-3 yrs)</option>
+                  <option value="mid">Mid (3-6 yrs)</option>
+                  <option value="senior">Senior (6+ yrs)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="company-requirements">Company Requirements (optional)</label>
+              <input type="text" id="company-requirements" placeholder="e.g. Must know Python, SQL, Machine Learning" />
+            </div>
+
+            <button type="submit" class="btn btn-primary">🚀 Analyse Resume</button>
+          </form>
+        </div>
+
+        <!-- Loader -->
+        <div id="resume-loader" class="loader hidden" style="margin-top:24px;">
+          <div class="spinner"></div>
+          <span>Analysing your resume…</span>
+        </div>
+
+        <!-- ── Analytics Dashboard (built dynamically by JS) ── -->
+        <div id="resume-analytics" class="resume-analytics hidden"></div>
+
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="js/env.js"></script>
+<script src="js/api.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>
